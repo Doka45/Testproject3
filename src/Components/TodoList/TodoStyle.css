@@ -1,0 +1,70 @@
+
+
+.listItems {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    margin-top: 16px;
+    padding: 5px;
+
+
+}
+
+.listItems:hover {
+    background:#E4E6E7;
+    /* text-decoration:line-through; */
+}
+
+/* .close {
+    text-decoration:line-through;
+} */
+
+/* .filter {
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 100px;
+    width: 86px;
+    height: 40px;
+    gap: 8px;
+
+} */
+
+.allBut {
+    display: grid;
+    align-self: flex-start;
+    column-gap: 16px;
+    grid-template-columns: min-content min-content min-content;
+    padding: 102px 0px;
+}
+
+.butTodo {
+    border:none;
+    width: max-content;
+    padding: 8px 24px;
+    gap: 8px;
+    border-radius: 100px;
+    /* background-color:#081E346B; */
+    /* color: #FFFFFF; */
+    background-color:#081E340D;
+    cursor: pointer;
+}
+
+.butDone {
+    border:none;
+    width: max-content;
+    padding: 10px 24px;
+    gap: 8px;
+    border-radius: 100px;
+    background-color:#081E340D;
+    cursor: pointer;
+}
+
+.butTrash {
+    border:none;
+    width: max-content;
+    padding: 10px 24px;
+    gap: 8px;
+    border-radius: 100px;
+    background-color:#081E340D;
+    cursor: pointer;
+}

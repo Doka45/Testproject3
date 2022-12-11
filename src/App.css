@@ -1,0 +1,19 @@
+
+.blackPlus {
+    background: linear-gradient(0deg, #081E34, #081E34), #F0F0F0;
+    border: none;
+    border-radius: 100px;
+    padding: 14px;
+    gap: 8px;
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    left: 1228px;
+    top: 304px;
+    cursor: pointer;
+}
+
+
+.btns {
+    color:red;
+}
