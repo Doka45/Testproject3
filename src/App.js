@@ -6,6 +6,10 @@ import React, { useState } from 'react';
 import { Container } from "react-bootstrap";
 import { PLUS } from "./image";
 import { v4 as uuidv4 } from "uuid";
+import { trippleDot } from "./image";
+import { DeleteTodo } from './Components/DeleteTodo/DeleteTodo';
+
+
 
 
 function App() {
@@ -14,10 +18,17 @@ function App() {
   const handleTriggerModal = () => {
     setModalOpen((prevModal) => !prevModal);
   };
+  const [isdeleteTodo, setDeleteTodo] = useState(false);
  
   const handleCloseModal = () => {
-    setModalOpen(false);
+    setDeleteTodo(false);
   };
+
+  const handleClickDeleteTodo = () => {
+    setDeleteTodo((prevDelete) => !prevDelete);
+
+  };
+ console.log (isdeleteTodo)
 
   const [todo, setTodo] = useState([
     {
@@ -36,7 +47,7 @@ function App() {
       id: uuidv4(),
       title: "Buy One Way Tickets to San Fransico",
       type: "all",
-      status: false
+      status: true
     },
     {
       id: uuidv4(),
@@ -50,21 +61,26 @@ function App() {
       type: "all",
       status: true
     },
-  ])
+  ]);
+  
+  // const oldItem = items.filter((el) => el.id === id)[0];
+
 
   return (
     
     <Container>
-
-
       <button className="blackPlus"
         onClick={handleTriggerModal}> <img src={PLUS} /> </button>
       <Head />
       {isModalOpen && <AddTodo handleCloseModal={handleCloseModal} todo={todo} setTodo={setTodo} />}
       <TodoList todo={todo} setTodo={setTodo} />
+      
+      
+      
+     
 
     </Container>
-  );
+  )
 }
 
 export default App;

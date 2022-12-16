@@ -2,35 +2,34 @@ import React, {useEffect, useState} from "react";
 import "./TodoStyle.css";
 import { TRASH } from "../../image";
 import { trippleDot } from "../../image";
+import Button from "react-bootstrap/Button";
+// import { DeleteTodo } from './Components/DeleteTodo/DeleteTodo';
+import { v4 as uuidv4 } from "uuid";
+
 
     
 function TodoList({ todo, setTodo }) {
 
-    const [deleted, setDeleted] = useState(null);
-    // const [filtered, setFiltered] = useState(todo);
+    // const [deleted, setDeleted] = useState(null);
     const [type, setType] = useState("all");
     const [items, setItems] = useState(todo);
 
-    // useEffect(() => {
-    //     setFiltered(todo)
-    // },[todo])
-    
+  
     function todoFilter(newType) {
-        // if (status === "all") {
-        //     setFiltered(todo)
-        // } else {
-        //     let newTodo = [...todo].filter(item => item.status === status)
-        //     setFiltered(newTodo)
-        // }
-        setType(newType)
-
-    }
+        setType(newType);
+    };
     
     function deleteTodo(id) {
-        // setDeleted(id);
-        // let newTodo = [...todo].filter(item => item.id != id);
         setTodo((prevtoDo) => prevtoDo.map((item) => {
             if (item.id === id) { return { ...item, isTrash: !item.isTrash } }
+            else return item;
+        }
+        ));
+    }
+
+        function doneTodo(id) {
+        setTodo((prevtoDo) => prevtoDo.map((item) => {
+            if (item.id === id) { return { ...item, isDone: !item.isDone } }
             else return item;
         }
             
@@ -38,19 +37,24 @@ function TodoList({ todo, setTodo }) {
     }
 
     function statusTodo(id) {
-        let newTodo = [...todo].filter(item => {
+        setTodo((prevtoDo) => prevtoDo.map((item) => {
             if (item.id == id) {
-                item.status = !item.status;
+                return {
+                    ...item, isDone: !item.isDone
+                }
             }
-            return item;
-        })
-        setTodo(newTodo);
+            else return item;
+        }
+        ));
     }
 
-    // const handleChangeStatus = (typeFromButton) => {
-    //     setType(typeFromButton);
-    // };
-
+    const handleItemChecked = (id) => {
+        setItems((prevItems) => prevItems.map((item) => {
+            if (item.id === id) {
+                return { ...item, isDone: !item.isDone }
+            } else return item;
+        }))
+    };
     const filteredItems =
             
             type === "done"
@@ -58,83 +62,76 @@ function TodoList({ todo, setTodo }) {
             : type === "trash"
             ? todo.filter((item) => item.isTrash)
             : todo;
+        
+    console.log(todo)
+    
+    // const handleItemDone = (keyFromLabel) => {
+    //     const index = items.findIndex((item) => item.id === keyFromLabel);
+    //     const oldObj = items[index];
+    //     const newObj = { ...oldObj, isDone: !oldObj.isDone };
+        
+    //     const leftPart = items.slice(0, index);
+    //     const rightPart = items.slice(index + 1, items.length);
 
-    console.log(todo);
+    //     const newItems = [...leftPart, newObj, ...rightPart];
+
+    //     setItems(newItems);
+    // };
+// 
+    // const oldItem = items.filter((el) => el.id === id)[0];
+    // const itemIndex = items.findIndex((el) => el.id === id);
+    // const newItem = { ...oldItem, isDone: !oldItem.isDone };
+
+    // setItems([
+    //     ...items.slice(0, itemIndex),
+    //     newItem,
+    //     ...items.slice(itemIndex + 1, items.length),
+    // ]);
+
+
+
+
+
     return (
         <div>
-                    <div aria-label="Basic example" className="allBut" >
-                        <button className="butTodo"  onClick={ ()=> todoFilter ("all")}>To Do</button>
-                        <button className="butDone"  onClick={ ()=> todoFilter ("done")}>Done</button>
-                        <button className="butTrash" onClick={ ()=> todoFilter ("trash")}>Trash</button>
-                    </div>
-                      <hr></hr>
+            <div aria-label="Basic example" className="allBut" >
+                <Button className="butTodo" variant="outline-secondary" onClick={() => todoFilter("all")}> <b>To Do</b></Button>
+                <Button className="butDone" variant="outline-secondary" onClick={() => todoFilter("done")}> <b>Done</b></Button>
+                <Button className="butTrash" variant="outline-secondary" onClick={() => todoFilter("trash")}> <b>Trash</b></Button>
+            </div>
+            
+            <hr></hr>
             {
-                filteredItems.map(item => (
-                    <div key={item.id} className="listItems">
-                
-                                <div>{item.title}</div>
-                    
-                        {/* {
-                            deleted == item.id ?
-                                <div>
-                                    <button>Move to Trash</button>
-                                    <button>Delete Forever</button>
-                                    <button>Move Back To To Do</button>
-                                </div> :
-                                <div>
-
-                                </div>
-                        } */}
+                filteredItems.map(item => {
+                    if (!(item.isTrash && type !== 'trash'))
                         
+                        return <div key={item.id} className="listItems">
+                        
+                        
+                        <div id={item.id}>{item.title}</div> 
+
+                            <button className=""
+                            style={{
+                                border: "none",
+                                background: "white",
+                            }}
+                            >
+                            <input type="checkbox" />
+                        </button> 
+
                         <button style={{
                             border: "none",
-                            background: "white"
-                        }} onClick={() => statusTodo(item.id)}>
-                            
-                        <input type="checkbox" />
-                        </button>
-                                <button style={{
-                                    border: "none",
-                                    background: "white"
-                                }} onClick={() => deleteTodo(item.id)}>
-                                    {trippleDot}
-                                </button>
-                        
+                            background: "white",
+                            class: " \uF5D3"
+                        }} onClick={() => deleteTodo(item.id)}>
+                            {trippleDot}
+                        </button> 
 
                     </div>
-                ))
+                })
             }
         </div>
-        
-
-        
     )
 }
 
 export default TodoList;
-
-
-
-
-// <div key={item.id} className="listItems">
-                
-                    //             <div>{item.title}</div>
-                    
-                   
-                        
-                    //     <button style={{
-                    //         border: "none",
-                    //         background: "white"
-                    //     }} onClick={() => statusTodo(item.id)}>
-                            
-                    //     <input type="checkbox" />
-                    //     </button>
-                    //             <button style={{
-                    //                 border: "none",
-                    //                 background: "white"
-                    //             }} onClick={() => deleteTodo(item.id)}>
-                    //                 {trippleDot}
-                    //             </button>
-                        
-
-                    // </div>

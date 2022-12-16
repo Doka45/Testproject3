@@ -15,7 +15,7 @@ function AddTodo({ todo, setTodo }) {
                     status:true
                 }]
             )
-            setValue("")
+            setValue("");
         }
     }
         
